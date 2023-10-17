@@ -1,0 +1,18 @@
+server:
+  port: 8888
+database:
+  url: jdbc:mysql://localhost:3300/qin_genesis?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+  username: root
+  password: 123456
+spring:
+  datasource:
+    url: ${database.url}
+    username: ${database.username}
+    password: ${database.password}
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      #create-drop
+      ddl-auto: update
