@@ -15,4 +15,8 @@ public class BaseEntity {
     private String inUser;
 
     private LocalDateTime inDate;
+
+    private String lastEditUser;
+
+    private LocalDateTime lastEditDate;
 }

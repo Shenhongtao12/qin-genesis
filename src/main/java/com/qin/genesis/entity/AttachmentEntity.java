@@ -1,6 +1,8 @@
 package com.qin.genesis.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +12,9 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2023/10/17 23:29
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "t_attachment")
 public class AttachmentEntity implements Serializable {
@@ -21,7 +25,9 @@ public class AttachmentEntity implements Serializable {
 
     private String link;
 
-    @ManyToOne(targetEntity = EnterpriseEntity.class, optional = false)
+//    @JsonBackReference
+    @JsonIgnore
+    @ManyToOne(targetEntity = EnterpriseEntity.class, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "enterprise_id")
     private EnterpriseEntity enterprise;
 }

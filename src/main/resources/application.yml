@@ -1,7 +1,7 @@
 server:
   port: 8888
 database:
-  url: jdbc:mysql://localhost:3300/qin_genesis?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://10.16.78.63:8306/test_sys?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
   username: root
   password: 123456
 spring:
@@ -16,3 +16,20 @@ spring:
     hibernate:
       #create-drop
       ddl-auto: update
+springdoc:
+  api-docs:
+    #是否开启文档功能
+    enabled: true
+  swagger-ui:
+    #自定义swagger前端请求路径，输入http：127.0.0.1:8080/test会自动重定向到swagger页面
+    path: test
+    operations-sorter: method
+    #custom path for api docs
+    url: /doc/openapi.json
+  #包扫描路径
+  packages-to-scan: com.qin.genesis.controller
+  group-configs:
+    #分组名
+    - group: Enterprise
+      #按路径匹配
+      pathsToMatch: /api/**

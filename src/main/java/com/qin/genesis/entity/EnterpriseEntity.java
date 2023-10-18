@@ -1,7 +1,8 @@
 package com.qin.genesis.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,12 +14,14 @@ import java.util.List;
  * @version 1.0
  * @date 2023/10/17 21:09
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "t_enterprise", indexes = {
         @Index(name = "idx_userId", columnList = "userId"),
 })
-public class EnterpriseEntity implements Serializable {
+public class EnterpriseEntity extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +35,15 @@ public class EnterpriseEntity implements Serializable {
 
     private String phone;
 
+    @Column(length = 500)
     private String universityName;
 
+    @Column(length = 500)
     private String domainName;
 
-    @OneToMany(targetEntity = AttachmentEntity.class, mappedBy = "enterprise", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+    @OneToMany(targetEntity = AttachmentEntity.class, mappedBy = "enterprise", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private List<AttachmentEntity> attachmentList;
 
     /**
@@ -48,6 +55,7 @@ public class EnterpriseEntity implements Serializable {
 
     private Double halfYearProfit;
 
+    @Column(length = 1000)
     private String qualificationName;
 
     private Double lastFinancingMoney;
@@ -62,5 +70,24 @@ public class EnterpriseEntity implements Serializable {
     /**
      * 需求登记
      */
-    
+    @Column(length = 500)
+    private String industryAndMarketDemand;
+
+    @Column(length = 500)
+    private String spacePolicyDemand;
+
+    @Column(length = 500)
+    private String investDemand;
+
+    @Column(length = 500)
+    private String manpowerDemand;
+
+    @Column(length = 500)
+    private String enterpriseOperation;
+
+    @Column(length = 500)
+    private String deepIncubationDemand;
+
+    @Column(length = 1000)
+    private String memo;
 }
