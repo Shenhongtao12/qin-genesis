@@ -2,7 +2,6 @@ package com.qin.genesis;
 
 import com.qin.genesis.entity.*;
 import com.qin.genesis.repository.*;
-import com.qin.genesis.util.SerializeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -63,11 +62,13 @@ class QinGenesisApplicationTests {
         AttachmentEntity attachmentEntity = new AttachmentEntity();
         attachmentEntity.setId(6);
         attachmentEntity.setLink("http://abcddd");
-        attachmentEntity.setEnterprise(entity);
+        EnterpriseEntity one = new EnterpriseEntity();
+        one.setId(3);
+        attachmentEntity.setEnterprise(one);
         attachmentEntities.add(attachmentEntity);
         AttachmentEntity attachmentEntity2 = new AttachmentEntity();
-        attachmentEntity2.setId(7);
-        attachmentEntity2.setLink("http://eeeeeeddddqqqq");
+//        attachmentEntity2.setId(7);
+        attachmentEntity2.setLink("http://eeeedqqqq333333333322");
         attachmentEntity2.setEnterprise(entity);
         attachmentEntities.add(attachmentEntity2);
         entity.setAttachmentList(attachmentEntities);

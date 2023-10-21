@@ -2,7 +2,9 @@ package com.qin.genesis.service.impl;
 
 import com.qin.genesis.common.Constant;
 import com.qin.genesis.dto.BasicConfigDTO;
+import com.qin.genesis.entity.AttachmentEntity;
 import com.qin.genesis.entity.DemandEntity;
+import com.qin.genesis.entity.EnterpriseEntity;
 import com.qin.genesis.repository.*;
 import com.qin.genesis.service.IEnterpriseService;
 import com.qin.genesis.util.StringUtil;
@@ -21,6 +23,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EnterpriseServiceImpl implements IEnterpriseService {
+
+    @Autowired
+    private EnterpriseRepository enterpriseRepository;
 
     @Autowired
     private DemandRepository demandRepository;
@@ -70,5 +75,13 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
             }
         });
         return basicConfigDTO;
+    }
+
+    @Override
+    public void save(EnterpriseEntity enterprise) {
+        for (AttachmentEntity attachmentEntity : enterprise.getAttachmentList()) {
+            attachmentEntity.setEnterprise(enterprise);
+        }
+        enterpriseRepository.save(enterprise);
     }
 }

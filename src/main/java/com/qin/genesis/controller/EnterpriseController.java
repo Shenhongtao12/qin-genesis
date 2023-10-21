@@ -2,13 +2,12 @@ package com.qin.genesis.controller;
 
 import com.qin.genesis.common.RestResponse;
 import com.qin.genesis.dto.BasicConfigDTO;
+import com.qin.genesis.entity.EnterpriseEntity;
 import com.qin.genesis.service.IEnterpriseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Aaron
@@ -27,5 +26,11 @@ public class EnterpriseController extends BaseController {
     @GetMapping("config")
     public RestResponse<BasicConfigDTO> getConfig() {
         return SUCCESS(enterpriseService.getConfig());
+    }
+
+    @PostMapping
+    public RestResponse<String> saveEnterprise(@RequestBody EnterpriseEntity enterprise) {
+        enterpriseService.save(enterprise);
+        return SUCCESS("success");
     }
 }

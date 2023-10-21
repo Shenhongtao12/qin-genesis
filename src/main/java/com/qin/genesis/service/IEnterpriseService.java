@@ -1,6 +1,7 @@
 package com.qin.genesis.service;
 
 import com.qin.genesis.dto.BasicConfigDTO;
+import com.qin.genesis.entity.EnterpriseEntity;
 
 /**
  * @author Aaron
@@ -10,4 +11,6 @@ import com.qin.genesis.dto.BasicConfigDTO;
 public interface IEnterpriseService {
 
     BasicConfigDTO getConfig();
+
+    void save(EnterpriseEntity enterprise);
 }
