@@ -1,9 +1,7 @@
 package com.qin.genesis.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +13,9 @@ import java.util.List;
  * @version 1.0
  * @date 2023/10/17 23:04
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "t_demand")
 @JsonInclude(JsonInclude.Include.NON_NULL)

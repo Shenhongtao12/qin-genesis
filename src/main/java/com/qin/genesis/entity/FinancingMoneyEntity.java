@@ -1,6 +1,9 @@
 package com.qin.genesis.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +14,9 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2023/10/17 23:02
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "t_financing")
 public class FinancingMoneyEntity implements Serializable {

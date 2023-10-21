@@ -1,7 +1,6 @@
 package com.qin.genesis.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +11,9 @@ import java.io.Serializable;
  * @version 1.0
  * @date 2023/10/17 22:59
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "t_qualification")
 public class QualificationEntity implements Serializable {
