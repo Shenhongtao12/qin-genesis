@@ -1,6 +1,5 @@
 package com.qin.genesis.exception;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +23,7 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.validation.ValidationException;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -83,10 +83,8 @@ public class CustomExceptionHandler {
                 exceptionResponseModel = handleSQLException(cause);
                 break;
             }
-
             cause = cause.getCause();
         }
-
         return exceptionResponseModel;
     }
 
@@ -127,6 +125,8 @@ public class CustomExceptionHandler {
             return HttpStatus.NOT_FOUND;
         } else if (t instanceof AsyncRequestTimeoutException) {
             return HttpStatus.SERVICE_UNAVAILABLE;
+        } else if (t instanceof ValidationException) {
+            return HttpStatus.BAD_REQUEST;
         }
 
         return HttpStatus.INTERNAL_SERVER_ERROR;
