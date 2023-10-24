@@ -4,6 +4,7 @@ import com.qin.genesis.common.Constant;
 import com.qin.genesis.dto.BasicConfigDTO;
 import com.qin.genesis.entity.AttachmentEntity;
 import com.qin.genesis.entity.DemandEntity;
+import com.qin.genesis.entity.DomainEntity;
 import com.qin.genesis.entity.EnterpriseEntity;
 import com.qin.genesis.repository.*;
 import com.qin.genesis.service.IEnterpriseService;
@@ -12,6 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +48,9 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 
     @Autowired
     private UniversityRepository universityRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
 
     @Override
@@ -83,5 +93,19 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
             attachmentEntity.setEnterprise(enterprise);
         }
         enterpriseRepository.save(enterprise);
+    }
+
+    @Override
+    public void criteriaBuilder() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();
+        Root<EnterpriseEntity> enterpriseRoot = criteriaQuery.from(EnterpriseEntity.class);
+        Join<EnterpriseEntity, AttachmentEntity> attachmentRoot = enterpriseRoot.join("enterprise_id");
+
+        criteriaQuery.multiselect(enterpriseRoot, attachmentRoot).where(criteriaBuilder.equal(enterpriseRoot.get("id"), 3));
+        List<Tuple> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+        for (Tuple tuple : resultList) {
+
+        }
     }
 }

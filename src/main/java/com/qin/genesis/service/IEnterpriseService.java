@@ -13,4 +13,6 @@ public interface IEnterpriseService {
     BasicConfigDTO getConfig();
 
     void save(EnterpriseEntity enterprise);
+
+    public void criteriaBuilder();
 }

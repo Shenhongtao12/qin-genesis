@@ -70,7 +70,7 @@ public class EnterpriseEntity extends BaseEntity implements Serializable {
     /**
      * 需求登记
      */
-    @Column(length = 500)
+    @Column(length = 500, columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String industryAndMarketDemand;
 
     @Column(length = 500)

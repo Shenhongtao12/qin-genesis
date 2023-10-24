@@ -2,6 +2,7 @@ package com.qin.genesis;
 
 import com.qin.genesis.entity.*;
 import com.qin.genesis.repository.*;
+import com.qin.genesis.service.IEnterpriseService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +33,12 @@ class QinGenesisApplicationTests {
 
     @Autowired
     private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    private IEnterpriseService enterpriseService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void initData() {
@@ -82,6 +89,12 @@ class QinGenesisApplicationTests {
 //        System.out.println(SerializeUtil.serialize(enterpriseEntity));
 
 //        enterpriseRepository.deleteById(2);
+    }
+
+    @Test
+    void testQuery() {
+        User abc1234 = userRepository.findByUsername("abc1234");
+        System.out.println(abc1234);
     }
 
 }
