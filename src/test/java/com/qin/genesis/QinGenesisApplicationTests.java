@@ -1,12 +1,20 @@
 package com.qin.genesis;
 
+import com.qin.genesis.common.PageResult;
 import com.qin.genesis.entity.*;
 import com.qin.genesis.repository.*;
 import com.qin.genesis.service.IEnterpriseService;
+import com.qin.genesis.util.SerializeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -47,6 +55,9 @@ class QinGenesisApplicationTests {
 
     @Autowired
     private PermissionRepository permissionRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     void initData() {
@@ -100,7 +111,7 @@ class QinGenesisApplicationTests {
     }
 
     @Test
-    void testQuery() {
+    void testSave() {
 //        User abc1234 = userRepository.findByUsername("abc1234");
 //        System.out.println(abc1234);
 
@@ -125,6 +136,35 @@ class QinGenesisApplicationTests {
         user.setRoles(roles);
 
         userRepository.save(user);
+    }
+
+    @Test
+    void testQuery() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        //predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("username"), "user111"));
+
+        query.select(root).where(predicates.toArray(new Predicate[0]));
+
+        List<User> resultList = entityManager.createQuery(query)
+                .setFirstResult(0)
+                .setMaxResults(10)
+                .getResultList();
+
+        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+        Root<User> countRoot = countQuery.from(User.class);
+        countQuery.select(criteriaBuilder.count(countRoot)).where(predicates.toArray(new Predicate[0]));
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+
+        PageResult<User> pageResult = new PageResult<>();
+        pageResult.setData(resultList);
+        pageResult.setTotal(total);
+        pageResult.setPages(1);
+        System.out.println("===========total========= " + total);
+        System.out.println(SerializeUtil.serialize(pageResult));
     }
 
 }
