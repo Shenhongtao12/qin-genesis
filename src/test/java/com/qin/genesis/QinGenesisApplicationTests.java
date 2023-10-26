@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @SpringBootTest
@@ -39,6 +41,12 @@ class QinGenesisApplicationTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Test
     void initData() {
@@ -93,8 +101,30 @@ class QinGenesisApplicationTests {
 
     @Test
     void testQuery() {
-        User abc1234 = userRepository.findByUsername("abc1234");
-        System.out.println(abc1234);
+//        User abc1234 = userRepository.findByUsername("abc1234");
+//        System.out.println(abc1234);
+
+        Permission permission = new Permission();
+        permission.setName("/premio");
+        permissionRepository.save(permission);
+
+        Role role = new Role();
+        role.setName("普通");
+        HashSet<Permission> set = new HashSet<>();
+        set.add(permission);
+        set.add(new Permission(3L));
+        role.setPermissions(set);
+        roleRepository.save(role);
+
+        User user = new User();
+        user.setUsername("user111");
+        user.setPassword("123123");
+        HashSet<Role> roles = new HashSet<>();
+        roles.add(role);
+        roles.add(new Role(2L));
+        user.setRoles(roles);
+
+        userRepository.save(user);
     }
 
 }
